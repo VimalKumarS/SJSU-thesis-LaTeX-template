@@ -1,2 +1,2 @@
- bibtex thesis
- bibtex thesisbib
+ bibtex SyntaxParameter-SweetJS
+ bibtex SyntaxParameter-SweetJSbib

@@ -1,0 +1,104 @@
+\chapter{Introduction}
+
+\section{What is macro?} 
+Macro is a rule or pattern that specifies how certain input sequence, should be mapped to output sequence according to some defined procedure.  Using macro system, programmer can introduce new syntactic elements to the programming language.Macro found in a program are expanded by a macro expander. Macros allow a programmer to enable code reuse.
+
+There are two type of macro system
+\begin{enumerate}
+\item {\bf Lexical macro systems }, called lexical macro system, such as C preprocessor, "Preprocessor" generally means a tool that transform the codes before the main compiler get hold of it. Lexical macros are ignorant of the grammar of core programming language and this sometime result in ill-formed program and result in accidental capture of the identifier.
+ Example
+\begin{lstlisting}
+		#define INCI(i) {int a=0; ++i;}
+		int main(void)
+		{
+ 		   int a = 0, b = 0;
+ 		   INCI(a);
+  		   INCI(b);
+  		   printf("a is now %d, b is now %d\n", a, b);
+  		   return 0;
+		}
+\end{lstlisting}
+
+Running through C preprocessor result in
+\begin{lstlisting}
+		int main(void)
+		{
+    		int a = 0, b = 0;
+    		{int a=0; ++a;};
+    		{int a=0; ++b;};
+    		printf("a is now %d, b is now %d\n", a, b);
+    		return 0;
+		}
+\end{lstlisting}
+
+\item {\bf Syntatic macro systems }, like Lisp and Scheme programming language. these macro system are aware of the grammar of core programming language they transform the syntax tree according to a number of user-defined rules. Rule can be written in the same programming language as the program, or in other language that rely on fully external language to define the transformation, such as the XSLT preprocessor for XML. Example
+
+\begin{lstlisting}
+		(define-syntax swap! 
+   			(syntax-rules () 
+     		((_ a b) 
+     		 (let ((value a)) 
+        	 (set! a b) 
+        	 (set! b value))))) 
+\end{lstlisting}
+\end{enumerate}
+
+\section{What Sweet.JS bring for us?}
+
+Sweet.js is a hygienic macro compiler for JavaScript that take JavaScript macros and produces normal JavaScript one can run in browser or using Node.js. The idea is that you define a macro with a name and a list of patterns. Whenever macro is invoked, at compile time the code is matched and expanded. 
+
+Sweet.js provide the two way to define a macro: simple pattern based rule macros work by matching a syntax pattern generating the new pattern based on the template and the more powerful procedural case macros allow you to manipulate syntax. Example
+
+\begin{lstlisting}
+	macro define {
+   	 rule { $x } => {
+   		    var $x
+   	 }
+
+   	 rule { $x = $expr } => {
+   	     var $x = $expr
+    	}
+	}
+
+	define y;
+	define y = 5;
+\end{lstlisting}
+
+Above code will expand to
+
+\begin{lstlisting}
+	var y;
+	var y = 5;
+\end{lstlisting}
+
+\section{Syntax-Parameter}
+
+Hygienic macro are macros whose expansion is result not to cause the accidental capture of identifier introduced by the macro expander. Hygiene prevents variables name inside the macros from clashing with the variables in the surrounding code. They are the feature of programming language such as Scheme and Dylan. 
+
+There are occasions when traditional hygienic binding are insufficient example, "anaphoric if condition"
+where while expanding the macro definition at compile time may introduce new variable binding, these new binding can end up capturing variables in your own code. That is new binding might shadow a variable which you have already created. Example
+
+\begin{lstlisting}
+	(define-syntax or
+  	(syntax-rules ()
+    	((_ e1 e2)
+     	(let ((t e1))
+       	(if t t e2)))))
+\end{lstlisting}
+
+Calling above macro 
+\begin{lstlisting}
+ 	(let ((t 5))
+  		(or #f t))
+\end{lstlisting} 
+  expand to 
+
+\begin{lstlisting} 
+  	(let ((t 5))
+  		(let ((t #f))
+    	(if t t t)))
+\end{lstlisting} 
+    
+    This program evaluate to \#f, which is not the desired output, on expanding the macro the binding t is shadowed to \#f. This issue is being resolved in Scheme using syntax-parameter.Syntax parameter are a mechanism for rebinding a macro definition with in the dynamic extent of a macro expansion.
+
+The same problem i observed with Sweet.JS library, in this paper i present the example of macro where it break Sweet.JS hygienic macro and proposed the solution taking inspiration from the Scheme's syntax parameter.Will discuss in section 3.
