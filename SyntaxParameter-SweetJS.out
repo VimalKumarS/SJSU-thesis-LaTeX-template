@@ -1,26 +1,8 @@
-<<<<<<< HEAD
 \BOOKMARK [0][-]{chapter.1}{Introduction}{}% 1
 \BOOKMARK [1][-]{section.1.1}{What is macro?}{chapter.1}% 2
 \BOOKMARK [1][-]{section.1.2}{What Sweet.JS bring for us?}{chapter.1}% 3
 \BOOKMARK [1][-]{section.1.3}{Syntax-Parameter}{chapter.1}% 4
 \BOOKMARK [0][-]{chapter.2}{Basics of Sweet.JS}{}% 5
 \BOOKMARK [1][-]{section.2.1}{Type of macros}{chapter.2}% 6
-\BOOKMARK [1][-]{section.2.2}{Macro expansion process}{chapter.2}% 7
+\BOOKMARK [1][-]{section.2.2}{High level design}{chapter.2}% 7
 \BOOKMARK [1][-]{section.2.3}{Problem statement}{chapter.2}% 8
-=======
-\BOOKMARK [0][-]{chapter.1}{The Basics}{}% 1
-\BOOKMARK [1][-]{section.1.1}{Typesetting Text}{chapter.1}% 2
-\BOOKMARK [1][-]{section.1.2}{Special Characters}{chapter.1}% 3
-\BOOKMARK [1][-]{section.1.3}{Fonts}{chapter.1}% 4
-\BOOKMARK [1][-]{section.1.4}{Math Basics}{chapter.1}% 5
-\BOOKMARK [2][-]{subsection.1.4.1}{Numbered Equations}{section.1.4}% 6
-\BOOKMARK [2][-]{subsection.1.4.2}{Last Word on Equations}{section.1.4}% 7
-\BOOKMARK [1][-]{section.1.5}{Lists}{chapter.1}% 8
-\BOOKMARK [1][-]{section.1.6}{Verbatim}{chapter.1}% 9
-\BOOKMARK [0][-]{chapter.2}{Symbolic Cross-References}{}% 10
-\BOOKMARK [1][-]{section.2.1}{Figures}{chapter.2}% 11
-\BOOKMARK [1][-]{section.2.2}{Tables}{chapter.2}% 12
-\BOOKMARK [1][-]{section.2.3}{Citations}{chapter.2}% 13
-\BOOKMARK [1][-]{section.2.4}{The Last Word}{chapter.2}% 14
-\BOOKMARK [0][-]{chapter.3}{The Files}{}% 15
->>>>>>> a34f0ab99c2ea19009d3e5c8f9cd5fa50b70861a

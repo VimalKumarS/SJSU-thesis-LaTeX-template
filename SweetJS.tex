@@ -71,17 +71,51 @@ Example
 Expand To
 
 \begin{lstlisting}
-
 	var x$123 = 0.8367501533161177;
 \end{lstlisting}
-case is run at expand-time and you use \#\{\} to create "templates" that construct code just like the rule in the other macros
+case is run at expand-time and you use \#\{\} to create "templates" that construct code just like the rule in the other macros.
 
 \end{enumerate}
 
-\section{Macro expansion process}
+\section{High level design}
 
-Will talk about enforestation process - Honu algorithm
+JavaScript macro system, sweet.js, include a separate reader that converts a sequence of tokens into a sequence of token trees,analogous to s-expression in scheme,without feedback from the parser.
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=0.5\textwidth]{images/Tokenizer.jpg}
+\caption{Sweet.JS anatomy.} 
+\label{fig:Tokenizer}
+\end{figure}
+
+Here reader records sufficiently history information in the form of token tree in order to decide how to parse the token. 
+
+Example
+
+\begin{lstlisting}
+		macro id {
+  			case {_ $x } => {
+   			 return #{ $x }
+  			}
+		  }
+		id 42
+\end{lstlisting}
+Reader convert string of token to token tree, 
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=1.0\textwidth]{images/readeroutput.jpg}
+\caption{Token tree.} 
+\label{fig:readeroutput}
+\end{figure}
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=1.0\textwidth]{images/AST.jpg}
+\caption{Final AST from parser.} 
+\label{fig:AST}
+\end{figure}
 
 \section{Problem statement}
 
-Will discuss the issue faced
+Will discuss the issue faced / breaking hygne and anaphoric if
