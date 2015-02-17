@@ -71,7 +71,7 @@ Above code will expand to
 	var y = 5;
 \end{lstlisting}
 
-\section{Syntax-Parameter}
+\section{How to break hygiene?}
 
 Hygienic macro are macros whose expansion is result not to cause the accidental capture of identifier introduced by the macro expander. Hygiene prevents variables name inside the macros from clashing with the variables in the surrounding code. They are the feature of programming language such as Scheme and Dylan. 
 
@@ -99,6 +99,6 @@ Calling above macro
     	(if t t t)))
 \end{lstlisting} 
     
-    This program evaluate to \#f, which is not the desired output, on expanding the macro the binding t is shadowed to \#f. This issue is being resolved in Scheme using syntax-parameter.Syntax parameter are a mechanism for rebinding a macro definition with in the dynamic extent of a macro expansion.
+    This program evaluate to \#f, which is not the desired output, on expanding the macro the binding t is shadowed to \#f. This issue is being resolved in Scheme using syntax-parameter.\textbf{Syntax-parameter} are a mechanism for rebinding a macro definition with in the dynamic extent of a macro expansion.
 
 The same problem i observed with Sweet.JS library, in this paper i present the example of macro where it break Sweet.JS hygienic macro and proposed the solution taking inspiration from the Scheme's syntax parameter. Problem and solution discussed in up-coming chapter.

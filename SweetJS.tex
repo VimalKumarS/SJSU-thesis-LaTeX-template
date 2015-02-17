@@ -1,7 +1,7 @@
 \chapter{Basics of Sweet.JS}
 
 Sweet.js implements macros for JavaScript, which takes source code written with sweet.js macros and produces the expanded source that can be run in any JavaScript environment. 
-\section{Type of macros}
+\section{Type of macros?}
 \begin{enumerate}
 \item {\bf Rule macros }
 Rule macros work by matching a syntax pattern and generating new syntax based on the template.
@@ -77,9 +77,9 @@ case is run at expand-time and you use \#\{\} to create "templates" that constru
 
 \end{enumerate}
 
-\section{High level design}
+\section{How Sweet.JS work?}
 
-JavaScript macro system, sweet.js, include a separate reader that converts a sequence of tokens into a sequence of token trees,analogous to s-expression in scheme,without feedback from the parser.
+JavaScript macro system, sweet.js include a separate reader that converts a sequence of tokens into a sequence of token trees,analogous to s-expression in scheme,without feedback from the parser.
 
 \begin{figure}[htb]
 \centering
@@ -88,7 +88,7 @@ JavaScript macro system, sweet.js, include a separate reader that converts a seq
 \label{fig:Tokenizer}
 \end{figure}
 
-Here reader records sufficiently history information in the form of token tree in order to decide how to parse the token. 
+Parser give structure to unstructured source code. lexer which converts a character stream to a token stream and a parser which converts the token stream into an AST according to a context free grammar ~\cite{bib2}.System which expand the macro definition must sit in between lexer and parser.Here reader records sufficiently history information in the form of token tree in order to decide how to parse the token, this is required to decide if token is a divisor or a regular expression.
 
 Example
 
@@ -101,7 +101,6 @@ Example
 		id 42
 \end{lstlisting}
 Reader convert string of token to token tree, 
-
 \begin{figure}[htb]
 \centering
 \includegraphics[width=1.0\textwidth]{images/readeroutput.jpg}
@@ -116,6 +115,75 @@ Reader convert string of token to token tree,
 \label{fig:AST}
 \end{figure}
 
-\section{Problem statement}
+The approach used in Sweet.JS named as Enforestation, was pioneered by Honu ~\cite{bib4}. Enforestation means transformation, it extract the sequence of terms produced by the reader to create a term tree. A term tree is a kind of proto-AST that represent the partial parse program. As the expander passes through the token trees, it creates term trees that contain unexpanded sub trees that will be expanded once all macro definition have been discovered in the current scope.
 
-Will discuss the issue faced / breaking hygne and anaphoric if
+
+
+\section{Problem trying to solve?}
+
+Although the benefits of hygienic macros are well established, there are occasions when traditional hygienic bindings are insufficient. let's understand this via example "anaphoric conditionals" where value of the tested expression is available as an 'it' bindings.That means when the condition is true, an "it" identifier is automatically created and set to the value of the condition.
+\begin{figure}
+\centering
+\includegraphics[width=1.0\textwidth]{images/Breakhygiene.jpg}
+\caption{Break hygienic.} 
+\label{fig:Breakhygiene}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=1.0\textwidth]{images/macroexpansion.jpg}
+\caption{Macro expansion.} 
+\label{fig:macroexpansion}
+\end{figure}
+
+\newpage
+
+In above macro expansion, at line (8) identifier 'it' is not defined.Here we wish to introduce the identifiers as is, unhygienically. Same unhygienic macros are observed in Scheme as shown in the below example, mistake is if our new syntax introduces a variable that accidentally conflicts with one in the code surrounding our macro.
+
+\begin{lstlisting}
+	(define-syntax-rule (aif condition true-expr false-expr)
+    	(let ([it condition])
+      	(if it
+         	 true-expr
+         	 false-expr)))
+
+ 	(aif #t (displayln it) (void))
+
+	it: undefined;
+	 cannot reference an identifier before its definition
+  	in module: 'program
+\end{lstlisting}
+
+Good way is with a syntax parameter, as shown below inside the syntax-parameterize, "it" acts as an alias for tmp. The alias behavior is created by make-rename-transformer.\textbf{define-syntax-parameter}, binds keyword to the value obtained by evaluating transformer. The transformer provide the default expansion for the syntax parameter.
+\textbf{syntax-parameterize}, adjust keyword to use the values obtained by evaluating their transformer in the expansion of the expression. 
+
+
+\begin{lstlisting}
+	(require racket/stxparam)
+	(define-syntax-parameter it
+    	(lambda (stx)
+     	 (raise-syntax-error (syntax-e stx)
+     	 		 "can only be used inside aif")))
+
+ 	(define-syntax-rule (aif condition true-expr false-expr)
+    	(let ([tmp condition])
+     	 (if tmp
+          (syntax-parameterize ([it (make-rename-transformer #'tmp)])
+            true-expr)
+          false-expr)))
+\end{lstlisting}
+
+If we try to use it outside of an aif form, and it isn’t otherwise defined, we get an error 
+\begin{lstlisting}
+	(displayln it)
+
+	error->it: can only be used inside aif
+\end{lstlisting}
+
+But we can still define it as a normal variable in local definition contexts like:
+\begin{lstlisting}
+	(let ([it 10])
+  	  it)
+
+	output: 10
+\end{lstlisting}

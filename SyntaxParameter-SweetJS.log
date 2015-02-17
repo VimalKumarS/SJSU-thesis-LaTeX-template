@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2015.1.25)  16 FEB 2015 13:06
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2015.1.25)  16 FEB 2015 20:17
 entering extended mode
 **SyntaxParameter-SweetJS.tex
 
@@ -433,7 +433,9 @@ Package geometry Warning: Over-specification in `v'-direction.
 r-SweetJS.aux"
 ("F:\SJSU\CS297\my work\latexTemplate\SJSU-thesis-LaTeX-template\Introduction.a
 ux")
-("F:\SJSU\CS297\my work\latexTemplate\SJSU-thesis-LaTeX-template\SweetJS.aux"))
+("F:\SJSU\CS297\my work\latexTemplate\SJSU-thesis-LaTeX-template\SweetJS.aux")
+("F:\SJSU\CS297\my work\latexTemplate\SJSU-thesis-LaTeX-template\SyntaxParam.au
+x"))
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 64.
 LaTeX Font Info:    ... okay on input line 64.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 64.
@@ -597,30 +599,72 @@ CHAPTER 2.
 
 
 
-] [7] <images/Tokenizer.jpg, id=206, 453.19313pt x 48.18pt>
+] [7] <images/Tokenizer.jpg, id=225, 453.19313pt x 48.18pt>
 File: images/Tokenizer.jpg Graphic file (type jpg)
 
 <use images/Tokenizer.jpg>
 Package pdftex.def Info: images/Tokenizer.jpg used on input line 86.
 (pdftex.def)             Requested size: 216.81pt x 23.04967pt.
  [8]
-<images/readeroutput.jpg, id=228, 401.24907pt x 178.41656pt>
+<images/readeroutput.jpg, id=248, 401.24907pt x 178.41656pt>
 File: images/readeroutput.jpg Graphic file (type jpg)
 
 <use images/readeroutput.jpg>
-Package pdftex.def Info: images/readeroutput.jpg used on input line 107.
+Package pdftex.def Info: images/readeroutput.jpg used on input line 106.
 (pdftex.def)             Requested size: 433.62001pt x 192.82312pt.
 
-<images/AST.jpg, id=229, 472.76625pt x 77.53969pt>
+<images/AST.jpg, id=249, 472.76625pt x 77.53969pt>
 File: images/AST.jpg Graphic file (type jpg)
  <use images/AST.jpg>
-Package pdftex.def Info: images/AST.jpg used on input line 114.
+Package pdftex.def Info: images/AST.jpg used on input line 113.
 (pdftex.def)             Requested size: 433.62001pt x 71.12083pt.
-)
-[9 <F:/SJSU/CS297/my work/latexTemplate/SJSU-thesis-LaTeX-template/images/Token
-izer.jpg> <F:/SJSU/CS297/my work/latexTemplate/SJSU-thesis-LaTeX-template/image
-s/readeroutput.jpg>] [10 <F:/SJSU/CS297/my work/latexTemplate/SJSU-thesis-LaTeX
--template/images/AST.jpg>]
+
+<images/Breakhygiene.jpg, id=251, 472.76625pt x 414.04688pt>
+File: images/Breakhygiene.jpg Graphic file (type jpg)
+
+<use images/Breakhygiene.jpg>
+Package pdftex.def Info: images/Breakhygiene.jpg used on input line 127.
+(pdftex.def)             Requested size: 433.62001pt x 379.77158pt.
+ [9 <F:/SJSU/CS297/my work/latexTemplate/SJSU-thesis-LaTeX-template/images/Toke
+nizer.jpg>]
+<images/macroexpansion.jpg, id=265, 472.76625pt x 132.495pt>
+File: images/macroexpansion.jpg Graphic file (type jpg)
+
+<use images/macroexpansion.jpg>
+Package pdftex.def Info: images/macroexpansion.jpg used on input line 134.
+(pdftex.def)             Requested size: 433.62001pt x 121.52689pt.
+ [10 <F:/SJSU/CS297/my work/latexTemplate/SJSU-thesis-LaTeX-template/images/rea
+deroutput.jpg> <F:/SJSU/CS297/my work/latexTemplate/SJSU-thesis-LaTeX-template/
+images/AST.jpg>]
+
+LaTeX Warning: Text page 11 contains only floats.
+
+[11 <F:/SJSU/CS297/my work/latexTemplate/SJSU-thesis-LaTeX-template/images/Brea
+khygiene.jpg> <F:/SJSU/CS297/my work/latexTemplate/SJSU-thesis-LaTeX-template/i
+mages/macroexpansion.jpg>]
+Overfull \hbox (17.47374pt too wide) in paragraph at lines 144--145
+[][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+[12]
+Overfull \hbox (17.47374pt too wide) in paragraph at lines 168--169
+[][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (52.71544pt too wide) in paragraph at lines 171--172
+[][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+) [13]
+("F:\SJSU\CS297\my work\latexTemplate\SJSU-thesis-LaTeX-template\SyntaxParam.te
+x"
+CHAPTER 3.
+) [14
+
+
+
+]
 ("F:\SJSU\CS297\my work\latexTemplate\SJSU-thesis-LaTeX-template\bibsweet.tex"
 LaTeX Font Info:    Try loading font information for T1+cmtt on input line 11.
 
@@ -628,7 +672,7 @@ LaTeX Font Info:    Try loading font information for T1+cmtt on input line 11.
 File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 ))
 ("F:\SJSU\CS297\my work\latexTemplate\SJSU-thesis-LaTeX-template\SyntaxParamete
-r-SweetJS.bbl") [11
+r-SweetJS.bbl") [15
 
 
 ]
@@ -640,12 +684,15 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 127.
 r-SweetJS.aux"
 ("F:\SJSU\CS297\my work\latexTemplate\SJSU-thesis-LaTeX-template\Introduction.a
 ux")
-("F:\SJSU\CS297\my work\latexTemplate\SJSU-thesis-LaTeX-template\SweetJS.aux"))
+("F:\SJSU\CS297\my work\latexTemplate\SJSU-thesis-LaTeX-template\SweetJS.aux")
+("F:\SJSU\CS297\my work\latexTemplate\SJSU-thesis-LaTeX-template\SyntaxParam.au
+x"))
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 127.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 127.
 Package rerunfilecheck Info: File `SyntaxParameter-SweetJS.out' has not changed
 .
-(rerunfilecheck)             Checksum: 8EF53455BAC70D90790ED9AFF6D6AFA1;489.
+(rerunfilecheck)             Checksum: F3BD1913EC0E356C1C64E6C8E2B01281;672.
+
  
 BibTeX Info: The commands to generate the bibliography and references are: 
  bibtex SyntaxParameter-SweetJS
@@ -653,21 +700,21 @@ BibTeX Info: The commands to generate the bibliography and references are:
  
  ) 
 Here is how much of TeX's memory you used:
- 9568 strings out of 493921
- 142577 string characters out of 3147264
- 235600 words of memory out of 3000000
- 12533 multiletter control sequences out of 15000+200000
+ 9634 strings out of 493921
+ 144020 string characters out of 3147264
+ 238283 words of memory out of 3000000
+ 12547 multiletter control sequences out of 15000+200000
  10138 words of font info for 35 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 36i,6n,40p,836b,950s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 36i,7n,40p,836b,1614s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\Vimal Kumar\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\d
 pi600\ectt1200.pk> <C:\Users\Vimal Kumar\AppData\Local\MiKTeX\2.9\fonts\pk\ljfo
 ur\jknappen\ec\dpi600\ecbx1200.pk> <C:\Users\Vimal Kumar\AppData\Local\MiKTeX\2
 .9\fonts\pk\ljfour\jknappen\ec\dpi600\ecrm1200.pk><C:/Program Files/MiKTeX 2.9/
 fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on SyntaxParameter-SweetJS.pdf (18 pages, 177162 bytes).
+Output written on SyntaxParameter-SweetJS.pdf (22 pages, 265992 bytes).
 PDF statistics:
- 487 PDF objects out of 1000 (max. 8388607)
- 151 named destinations out of 1000 (max. 500000)
- 100 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 576 PDF objects out of 1000 (max. 8388607)
+ 194 named destinations out of 1000 (max. 500000)
+ 134 words of extra memory for PDF output out of 10000 (max. 10000000)
 
