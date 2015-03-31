@@ -11,4 +11,4 @@
 \contentsline {section}{\numberline {2.3}\hspace {-1.7em}Problem trying to solve?}{14}{section.2.3}
 \contentsline {chapter}{\numberline {3}Syntax parameters}{18}{chapter.3}
 \contentsline {section}{\numberline {3.1}\hspace {-1.7em}Approach 1}{18}{section.3.1}
-\contentsline {section}{\numberline {3.2}\hspace {-1.7em}Approach 2}{18}{section.3.2}
+\contentsline {section}{\numberline {3.2}\hspace {-1.7em}Approach 2}{21}{section.3.2}

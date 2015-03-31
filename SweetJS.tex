@@ -120,7 +120,26 @@ Reader convert string of token to token tree,
 
 Parser give structure to unstructured source code, In parsers without macro systems this is usually accomplished by a lexer which convert a character stream to a token stream and a parser which convert the token stream into an AST according to a context-free grammar.
 
-The approach used in Sweet.JS is \textit{Enforestation},first pioneered by Honu ~\cite{bib4}. Enforestation means transformation,extracts the sequence of terms produced by the reader to create a term tree. A term tree is a kind of proto-AST that represent a partial parse of the program. As the expander passes through the token trees, it creates term trees that contain unexpanded sub trees that will be expanded once all macro definition have been discovered in the current scope.
+The approach used in Sweet.JS is \textit{Enforestation},first pioneered by Honu ~\cite{bib4}. Enforestation means transformation,extracts the sequence of terms produced by the reader to create a term tree. Consider following let example
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=1.0\textwidth]{images/enforest.jpg}
+\caption{Macro Expansion.} 
+\label{fig:AST}
+
+\end{figure}
+Enforestation begins by loading the let macro into the macro environment and converting the function declaration into a term tree.
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=1.0\textwidth]{images/enforest1.jpg}
+\caption{Term tree.} 
+\label{fig:AST}
+
+\end{figure}
+
+A term tree is a kind of proto-AST that represent a partial parse of the program. As the expander passes through the token trees, it creates term trees that contain unexpanded sub trees that will be expanded once all macro definition have been discovered in the current scope.
 
 \section{Problem trying to solve?}
 
@@ -134,13 +153,13 @@ Although the benefits of hygienic macros are well established, there are occasio
 \label{fig:Breakhygiene}
 
 \end{figure}
-In above example, I define "unless" macro which run until condition is met, which in turn call the anaphoric-if condition which introduces an anaphor \textsc{it} which is bound to the result of the test clause.
+In above example, I define "unless" macro which run until condition is met, which in turn call the anaphoric-if condition which introduces an anaphor \textsc{it} which should bound to the result of the test clause.
 
 \newpage
 \begin{figure}
 
 \centering
-\includegraphics[width=0.8\textwidth]{images/macroexpansion.jpg}
+\includegraphics[width=1.0\textwidth]{images/macroexpansion.jpg}
 \caption{Macro expansion.} 
 \label{fig:macroexpansion}
 
@@ -148,7 +167,7 @@ In above example, I define "unless" macro which run until condition is met, whic
 
 \newpage
 
-In above macro expansion [Figure 5], at line (8) identifier \textsc{it} is not defined. Here we wish to introduce the identifiers deliberately breaking hygiene. 
+In above macro expansion [Figure 7], at line (8) identifier \textsc{it} is not defined. Here we wish to introduce the identifiers deliberately breaking hygiene. 
 
 Same unhygienic macros are possible in Scheme as shown in the below example, mistake is if our new syntax introduces a variable that conflicts with one in the code surrounding our macro.
 
