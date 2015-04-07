@@ -1,0 +1,24 @@
+\section{Sweet.JS macro system?}
+
+Sweet.JS~\cite{bib6} is a hygienic macro compiler for JavaScript that takes JavaScript macros and produces normal JavaScript code which one can run in a browser or using a standalone interpreter like Node.JS. The idea is that you define a macro with a name and a list of patterns. Whenever a macro is invoked, the code is matched and expanded at  compile time.
+
+Sweet.JS provides two ways to define a macro: 1) simple pattern based \textit{rule} macros that work by matching a syntax pattern and generating the new pattern based on the template, 2) the more powerful procedural \textit{case} macros allow you to manipulate syntax. The following example shows a rule based macro definition and usage:
+
+\begin{lstlisting}[frame=single]
+macro define {
+   	 rule { $x } => {
+   		    var $x
+   	 }
+   	 rule { $x = $expr } => {
+   	     var $x = $expr
+    	}
+}
+define y;
+define y = 5;
+\end{lstlisting}
+
+Above code will expand to
+\begin{lstlisting}[frame=single]
+	var y;
+	var y = 5;
+\end{lstlisting}

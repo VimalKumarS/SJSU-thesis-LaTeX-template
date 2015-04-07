@@ -1,6 +1,5 @@
 \chapter{Basics of Sweet.JS}
-
-Sweet.js implements macros for JavaScript, which takes source code written with Sweet.JS macros and produces the expanded source that can be run in any JavaScript environment. 
+Sweet.JS~\cite{bib6} is a hygienic macro compiler for JavaScript that takes JavaScript macros and produces normal JavaScript code which one can run in a browser or using a standalone interpreter like Node.JS. The idea is that you define a macro with a name and a list of patterns. Whenever a macro is invoked, the code is matched and expanded at  compile time and produces the expanded source that can be run in any JavaScript environment. 
 \section{Type of macros in Sweet.JS}
 \begin{enumerate}
 \item {\bf Rule macros }
@@ -12,15 +11,16 @@ macro <name> {
 }
 \end{lstlisting} 
 
-The following macro defines swapping of two number
+The following macro defines swapping two values:
 \begin{lstlisting}[frame=single]
-	macro swap {
-    	rule { ($x, $y) } => {
-        	var tmp = $x;
-        	$x = $y;
-        	$y = tmp;
-    	}
-	}
+macro swap {
+	rule { ($x, $y) } => {
+	var tmp = $x;
+	$x = $y; $y = tmp;
+   }
+}
+\end{lstlisting}
+\begin{lstlisting}[frame=single]
 	var foo = 5;
 	var tmp = 6;
 	swap(foo, tmp);
@@ -36,7 +36,7 @@ if Sweet.js did not support hygiene, this macro might expand to
 	foo = tmp;
 	tmp = tmp;
 \end{lstlisting} 
-The \texttt{tmp} created from the macro collides with my local \texttt{tmp}. This is a serious problem, but macros solve this by implementing hygiene. Basically they track the scope of variables during expansion and rename them to maintain the correct scope. Sweet.js fully implements hygiene so it never generates the code you see above. It would actually generate the following code
+The \texttt{tmp} created from the macro collides with my local \texttt{tmp}. This is a serious problem, but macros solve this issue by implementing hygiene. Basically they track the scope of variables during expansion and rename them to maintain the correct scope. Sweet.js fully implements hygiene so it never generates the code you see above. It would actually generate the following code
 \begin{lstlisting}[frame=single]
 	var foo = 5;
 	var tmp$1 = 6;
@@ -47,24 +47,24 @@ The \texttt{tmp} created from the macro collides with my local \texttt{tmp}. Thi
 Notice how two different "tmp" variables are created. This makes it extremely powerful to create complex macros elegantly.
 
 \item {\bf Case macros }
-Case macro are analogous to syntax-case in Scheme. Case macro allow the macro author to use JavaScript code to procedurally create and manipulate the syntax.
-To define case macro, the grammar is
+Case macro are analogous to \texttt{syntax-case} in Scheme. Case macros allow the macro author to use JavaScript code to procedurally create and manipulate the syntax.
+To define case macros, the grammar is
 \begin{lstlisting}[frame=single]
 	macro <name> {
   		case { <pattern> } => { <body> }
 	}
 \end{lstlisting}
-Example
+The following macro adds syntax for generating random numbers:
 \begin{lstlisting}[frame=single]
-	macro rand {
-  	  case { _ $x } => {
-    	    var r = Math.random();
-     	   letstx $r = [makeValue(r)];
-      	 return #{ var $x = $r }
-   		}
+macro rand {
+	case { _ $x } => {
+	var r = Math.random();
+	letstx $r = [makeValue(r)];
+	return #{ var $x = $r }
 	}
+}
 
-	rand x;
+rand x;
 \end{lstlisting}
 
 The above code expand to
@@ -80,7 +80,7 @@ The code within the ``case'' is run at expand-time and you use \#\{\} to create 
 
 \section{How Sweet.JS work?}
 
-The JavaScript macro system, Sweet.JS includes a separate reader that converts a sequence of tokens into a sequence of token trees, Analogous to s-expressions in scheme,without feedback from the parser.
+Sweet.JS includes a separate reader that converts a sequence of tokens into a sequence of token trees, analogous to s-expressions in scheme, without feedback from the parser ~\cite{bib2}.
 
 \begin{figure}[htb]
 \centering
@@ -89,7 +89,7 @@ The JavaScript macro system, Sweet.JS includes a separate reader that converts a
 \label{fig:Tokenizer}
 \end{figure}
 
-The parser gives structure to unstructured source code. The lexer which converts a character stream to a token stream and a parser converts the token stream into an AST according to a context free grammar ~\cite{bib2}.The macro expander  must sit in between the lexer and the parser.Here the reader records sufficiently history information in the form of token trees in order to decide how to parse the token, which is required to decide if token is a divisor or a regular expression.
+The parser gives structure to unstructured source code. The lexer converts a character stream to a token stream and a parser converts the token stream into an AST according to a context free grammar ~\cite{bib2}.The macro expander  must sit in between the lexer and the parser.Here the reader records sufficiently history information in the form of token trees in order to decide how to parse the token, which is required to decide if token is a divisor or a regular expression.
 In traditional JavaScript compilers, the parser and lexer are intertwined, rather than run the entire program through the lexer once to get a sequence of tokens, the parser calls out to the lexer from a given grammatical context with a flag to indicate if the lexer should accept a regular expression or a divide operator and the input character are tokenized accordingly ~\cite{bib2}.
 
 Example
