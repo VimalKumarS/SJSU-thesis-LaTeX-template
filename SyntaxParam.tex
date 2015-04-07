@@ -1,75 +1,71 @@
 \chapter{Syntax parameters}
 
-Syntax parameter are a mechanism for rebinding a macro definition with the dynamic extent of a macro expansion. With syntax parameter instead of introducing the unhygienic binding each time we instead create binding for the keyword, which we can adjust later when we want the keyword to have different meaning. As no new binding is introduced so hygiene is preserved, This is similar to the dynamic binding mechanism that we have at run time, except that the dynamic binding only occurs during macro expansion.
+Syntax parameter are a mechanism for rebinding a macro definition within the dynamic extent of a macro expansion. With syntax parameters instead of introducing the unhygienic binding each time we instead create a binding for the keyword, which we can adjust later when we want the keyword to have a different meaning. As no new binding is introduced so hygiene is preserved, This is similar to the dynamic binding mechanism that we have at run time, except that the dynamic binding only occurs during macro expansion.
 
 \section{Approach 1}
 
-In this approach I tried to use pre-processing approach similar to C, where I transform the code before the main compiler get hold of it. “SyntaxParameter” which replace and bind the parameter with  mapped value in the particular defined macro scope. Here macro transformation happen during the parse phase by matching the pattern. To define syntax parameter in Sweet.js provide a new keyword that look something like this:  
+In this approach I tried to use pre-processing approach similar to C, where I transform the code before the main compiler gets hold of it. \texttt{``SyntaxParameter"} replaces and binds the parameter with its mapped value in the particular defined macro scope. Here the macro transformation happens during the parse phase by matching the pattern. To define syntax parameters in Sweet.JS, the programmer provides a new keyword that looks something like this:  
 
-SyntaxParameter(<parameter>,<Mapped to>,<Scope/Macro Name>,<Macro definition>)
+\begin{lstlisting}[frame=single]
+SyntaxParameter(<parameter>,<Mapped to>,
+<Scope/Macro Name>,<Macro definition>)
+\end{lstlisting}
+
+``parameter" an identifier that is defined as a syntax parameter in the macro definition, \textit{``Mapped to"} is the macro input variable that will be mapped to \textit{``parameter"}, \textit{``Scope'} define the context of the macro definition.
 \newpage
-Example of usage is shown below 
+An example of its usage is shown below:
 
 \begin{figure}[htb]
 \centering
 \includegraphics[width=1.0\textwidth]{images/Appraoch1.jpg}
 \caption{Approach 1.} 
-\label{fig:AST}
-
+\label{fig:AST1}
 \end{figure}
-
 \begin{figure}[htb]
 \centering
 \includegraphics[width=1.0\textwidth]{images/Appraoch2.jpg}
 \caption{Calling unless macro} 
-\label{fig:AST}
+\label{fig:AST2}
 
 \end{figure}
 
-On expansion above macro looks like this
+The expanded code looks like:
 
 \begin{figure}[htb]
 \centering
 \includegraphics[width=1.0\textwidth]{images/Appraoch3.jpg}
 \caption{ it identifier is correctly bounded to \$cond.. Of an anaphoric-if} 
-\label{fig:AST}
+\label{fig:AST3}
 
 \end{figure}
 
-Since, `it' is correctly bounded to \$cond.. as desired, but this approach has certain disadvantage, since this won`t allow user to define macros with name ``SyntaxParameter'' consider like
+As the example in Figure 10 shows, \texttt{`it'} is correctly bounded to \$cond.. as desired, However this approach has certain disadvantages, since this won`t allow users to define macros named \texttt{``SyntaxParameter''} 
 
-\begin{lstlisting}[frame=single]
-macro SyntaxParameter {
-  ...
-}
-\end{lstlisting}
-
-So to fix this we first need to implement some primitive function that help us to create and manipulate the arbitrary compile time syntax transformation. Macros are compile time syntax transformation ,At the moment in Sweet.js the only way to create a syntax transformer is by defining a macro. A macro is really just a function that takes syntax and returns syntax (thus a syntax transformer). So when the ``expander'' encounters a macro definition it converts the body of the macro into a function and loads it into the compile time environment.
-
+At the moment in Sweet.JS the only way to create a syntax transformer is by defining a macro. A macro is really just a function that takes syntax and returns syntax (thus a syntax transformer). To fix this we first need to implement some primitive function that help us to create and manipulate the arbitrary compile time syntax transformation. Macros are compile time syntax transformation , So when the ``expander'' encounters a macro definition it converts the body of the macro into a function and loads it into the compile time environment.
 \newpage
 \section{Approach 2}
 
-In this approach I, defined ``syntaxparam'' similar to define-syntax-parameter in Scheme, which load the primitive function in compile time environment,''syntaxLocalValue,'' which return the compile time value from the environment and ``replaceSyntaxParam,'' which transform the identifier with the compile time value from the environment within the specified scope of the macro. Example shown below
+In this approach I, defined ``syntaxparam'' similar to define-syntax-parameter in Scheme, which loads the primitive function in compile time environment,''syntaxLocalValue,'' which load the compile time primitive function from the environment and ``replaceSyntaxParam,'' which transforms the identifier with the compile time value from the environment returned by ''syntaxLocalValue,''  within the defined scope of the macro. Example shown below
 
 \begin{figure}[htb]
 \centering
 \includegraphics[width=1.0\textwidth]{images/Appraoch21.jpg}
-\caption{ Approach 2.Syntax parameter implementation} 
-\label{fig:AST}
+
+\label{fig:AST4}
 \end{figure}
 
 \begin{figure}[htb]
 \centering
 \includegraphics[width=1.0\textwidth]{images/Appraoch23.jpg}
 \caption{ Approach 2.Syntax parameter implementation contd..} 
-\label{fig:AST}
+\label{fig:AST5}
 \end{figure}
  
 \begin{figure}[htb]
 \centering
 \includegraphics[width=1.0\textwidth]{images/Appraoch22.jpg}
 \caption{ Approach 2. Syntax parameter expansion} 
-\label{fig:AST}
+\label{fig:AST6}
 \end{figure}
 
 \newpage
@@ -77,7 +73,7 @@ In this approach I, defined ``syntaxparam'' similar to define-syntax-parameter i
 \centering
 \includegraphics[width=1.0\textwidth]{images/CodeWorking.jpg}
 \caption{ Approach 2. Implementation } 
-\label{fig:AST}
+\label{fig:AST7}
 \end{figure}
 
 The main entry point into the expander is appropriately enough,
