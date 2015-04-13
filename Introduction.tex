@@ -4,8 +4,8 @@
 A macro is a rule or pattern that specifies how a certain input sequence should be mapped to an output sequence according to some defined procedure. Using a macro system a programmer can introduce new syntactic elements to the programming language. Macros found in a program are expanded by a \textit{macro expander} and allow a programmer to enable code reuse.
 There are two types of macro systems
 \begin{enumerate}
-\item {\bf Lexical macro systems}, such as the C preprocessor, transform the codes before compilation. Lexical macros are ignorant of the grammar of the core programming language and therefore sometimes result in ill-formed programs and in accidental capture of identifiers~\cite{bib3}. They only require lexical analysis; that is they operate on the source text prior to any parsing, using simple substitution of tokenized character sequences for other tokenized character sequences, according to user-defined rules.
-Consider this example 
+\item {\bf Lexical macro systems},\textcolor{white}{``} such as the C preprocessor, transform the code before compilation. Lexical macros are ignorant of the grammar of the core programming language and therefore sometimes result in ill-formed programs and in accidental capture of identifiers~\cite{bib3}. They only require lexical analysis; that is they operate on the source text prior to any parsing, using simple substitution of tokenized character sequences for other tokenized character sequences, according to user-defined rules.\textcolor{white}{''} Consider this example 
+\textcolor{white}{``}
 \begin{lstlisting}[frame=single]
 #define INCI(i) {int a=0; ++i;}
 int main(void){	
@@ -16,19 +16,20 @@ int main(void){
   	return 0;
 	}
 \end{lstlisting}
-
+\textcolor{white}{''}
 Running through C preprocessor result in
+\textcolor{white}{``}
 \begin{lstlisting}[frame=single]
 int main(void)
-	{
-    	int a = 0, b = 0;
-    	{int a=0; ++a;};
-    	{int a=0; ++b;};
-    	printf("a is now %d, b is now %d\n", a, b);
-    	return 0;
-	}
+ {
+    int a = 0, b = 0;
+    {int a=0; ++a;};
+    {int a=0; ++b;};
+    printf("a is now %d, b is now %d\n", a, b);
+    return 0;
+ }
 \end{lstlisting}
-
+\textcolor{white}{''}
 The variable {\it a} declared in the top scope is shadowed by the {\it a} variable in the macro, which introduces a new scope.The output of the compiled program is:
 
 \begin{lstlisting}[frame=single]
@@ -36,25 +37,26 @@ a is now 0, b is now 1
 \end{lstlisting}
 
 The solution is to give the macro's variables names that do not conflict with any variable in the current program:
+\textcolor{white}{``}
 \begin{lstlisting}[frame=single]
 #define INCI(i) {int INCIa=0; ++i;}
 int main(void)
-{
+ {
     int a = 0, b = 0;
     INCI(a);
     INCI(b);
     printf("a is now %d, b is now %d\n", a, b);
     return 0;
-}
+ }
 \end{lstlisting}
-
+\textcolor{white}{''}
 this solution produces the correct output:
 \begin{lstlisting}[frame=single]
 a is now 1, b is now 1
 \end{lstlisting}
 The problem is solved for the current program, but this solution is not robust. This is where we require hygiene macro system which help in preserving the lexical scoping of all identifiers.
 
-\item {\bf Syntatic macro systems}, like those in the Lisp and Scheme ~\cite{bib12} programming languages are aware of the grammar of the core programming language. They transform the syntax tree according to a number of user-defined rules. Rules can be written in the same programming language as the program or another language that relies on a fully external language to define the transformation, such as the XSLT preprocessor for XML ~\cite{bib3}. Below is an example of a syntatic macro in scheme that swaps the values.
+\item {\bf Syntatic macro systems},\textcolor{white}{"} like those in the Lisp and Scheme ~\cite{bib12} programming languages are aware of the grammar of the core programming language. They transform the syntax tree according to a number of user-defined rules. Rules can be written in the same programming language as the program or another language that relies on a fully external language to define the transformation, such as the XSLT preprocessor for XML ~\cite{bib3}. Below is an example of a syntatic macro in scheme that swaps the values.\textcolor{white}{"}
 \begin{lstlisting}[frame=single]
 (define-syntax-rule (swap x y)
   (let ([tmp x])
@@ -92,15 +94,14 @@ with the correct result of (6 5). Racket's ~\cite{bib14}  pattern-based macros a
 
 \section{Hygiene}
 
-Hygienic macros are macros whose expansion does not cause the accidental capture of identifiers introduced by the macro expander. Hygiene prevents variable names inside the macros from clashing with the variables in the surrounding code. Hygienic macro systems are a feature of programming languages such as Scheme. 
+Hygienic macros are macros whose expansion does not cause the accidental capture of identifiers introduced by the macro expander. Hygiene prevents variable names inside the macros from clashing with the variables in the surrounding code. Hygienic macro systems are a feature of programming languages such as Scheme. Consider the following Scheme macro for ``or''
 
-There are occasions when traditional hygienic binding is insufficient: one example is the "anaphoric if condition" (version of the if-then-else construct which introduces an anaphor \textit{it} which is bound to the result of the test clause), where expanding the macro definition at compile time may introduce new variable bindings, that capture variables in your own code. That is, the new binding might shadow a variable that you have already created. Example
 \begin{lstlisting}[frame=single]
 (define-syntax or
   	(syntax-rules ()
-    	((_ e1 e2)
-     	(let ((t e1))
-       	(if t t e2)))))
+    ((_ e1 e2)
+     (let ((t e1))
+     (if t t e2)))))
 \end{lstlisting}
 We can call the above macro as shown below:
 \begin{lstlisting}[frame=single]
@@ -110,28 +111,41 @@ We can call the above macro as shown below:
 The macro call is expanded to:
 \begin{lstlisting}[frame=single]
 (let ((t 5))
-  		(let ((t #f))
-    	(if t t t)))
+  (let ((t #f))
+    (if t t t)))
 \end{lstlisting} 
+\textcolor{white}{``}
  This program evaluates to \#f, which is not the desired output. On expanding the macro the binding ``t'' is shadowed to \#f. If you run this in the scheme REPL, the output will be 5. One way to work around this, which was a common trick for LISP programmers of yore is to choose variable names that a programmer is unlikely to guess. We could modify the macro expander to automatically rename any variables bound by a macro expansion. In this case, our simple test program would expand as follows, using our first definition of ``or'':
-
+\textcolor{white}{''}
 \begin{lstlisting}[frame=single] 
 (let ((t 5))
   (let ((t.1 #f))
     (if t.1 t.1 t)))
 \end{lstlisting}   
-This program evaluates as expected.
+This program evaluates as expected.\textcolor{white}{``}
+
+There are occasions when traditional hygienic binding is insufficient: one example is the "anaphoric if condition" (version of the if-then-else construct which introduces an anaphor "\textit{it}," which is bound to the result of the test clause), where expanding the macro definition at compile time may introduce new variable bindings, that capture variables in your own code. That is, the new binding might shadow a variable that you have already created.
+\textcolor{white}{''}
+\begin{lstlisting}[frame=single] 
+(aif (big-long-calculation)
+     (foo it)
+     #f)
+\end{lstlisting} 
+when the condition is true, an  \textit{it} identifier is automatically created and set to the value of the condition.
 
 \section{Syntax Parameters}
-\textbf{Syntax parameters} are a mechanism for rebinding a macro definition within the dynamic extent of a macro expansion. The ability to write functions that instead of accepting and returning values, accept and return pieces of source code, allows for abstractions and extensions that just simply aren't possible in other languages. Below example shows how to define a syntax parameter in Racket:
+\textbf{Syntax parameters} \textcolor{white}{``}are a mechanism for rebinding a macro definition within the dynamic extent of a macro expansion. The ability to write functions that instead of accepting and returning values, accept and return pieces of source code, allows for abstractions and extensions that just simply aren't possible in other languages. With syntax parameters, instead of introducing the binding unhygienically each time, we instead create one binding for the keyword, which we can then adjust later when we want the keyword to have a different meaning. As no new bindings are introduced hygiene is preserved.\textcolor{white}{''}Looping macros are a common example of syntax parameter that introduces a ``break" or ``abort" function ~\cite{bib1}.
+
+Below example shows how to define a syntax parameter in Racket:
 \begin{lstlisting}[frame=single]
 #lang racket
 (require racket/stxparam)
 (define-syntax-parameter example-stx-parameter
     (lambda (stx)
         #'(displayln "I'm a syntax parameter!")))
-\end{lstlisting}        
-All macros are functions that take as input a syntax object representing the piece of the program where it was located, and return a new syntax object to replace the old one within the program. So with the following syntax parameter defined, this code
+\end{lstlisting}
+\textcolor{white}{``}  
+All macros are functions that take as input a syntax object representing the piece of the program where it was located, and return a new syntax object to replace the old one within the program. So with the following syntax parameter defined,\textcolor{white}{''} this code
 \begin{lstlisting}[frame=single]
 (example-stx-parameter)
 \end{lstlisting} 
@@ -140,6 +154,7 @@ The expanded code is
 (displayln "I'm a syntax parameter!")
 \end{lstlisting} 
 Remember that this transformation happens at compile time before the code is run. The purpose of a syntax parameter is to be modified by other macros with the syntax-parameterize form, which looks like this
+\newpage
 \begin{lstlisting}[frame=single]
 (syntax-parameterize 
 ([example-stx-parameter (lambda (stx) 
@@ -147,14 +162,14 @@ Remember that this transformation happens at compile time before the code is run
     (example-stx-parameter))
 (example-stx-parameter)
 \end{lstlisting} 
-
+\textcolor{white}{``}
 The syntax-parameterize form "renames" the parameter, giving it a new value that applies only in the code inside the syntax-parametrize form. So when the above code is expanded, it produces
-
+\textcolor{white}{''}
 \begin{lstlisting}[frame=single]
 (displayln "I'm parameterized!")
 (displayln "I'm a syntax parameter!")
 \end{lstlisting} 
 The occurence of ``example-stx-parameter'' inside the \textit{syntax-parameterize} form used the function defined in syntax-parameterize to transform the code instead of the original function.
 
-In this paper,I present the example of a macro that breaks hygienie in Sweet.JS and propose a solution taking inspiration from Scheme's syntax parameters. The problem and solution discussed in up-coming chapters.
+In this paper, I present the example of a macro that breaks hygienie in Sweet.JS and propose a solution taking inspiration from Scheme's syntax parameters. The problem and solution discussed in up-coming chapters.
 

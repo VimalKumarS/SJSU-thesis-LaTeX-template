@@ -5,12 +5,12 @@
 \contentsline {figure}{\numberline {\global \advance \c@totalfigurecount 1\relax 3}{\ignorespaces Final AST from parser.\relax }}{13}{figure.caption.7}
 \contentsline {figure}{\numberline {\global \advance \c@totalfigurecount 1\relax 4}{\ignorespaces Macro Expansion.\relax }}{14}{figure.caption.8}
 \contentsline {figure}{\numberline {\global \advance \c@totalfigurecount 1\relax 5}{\ignorespaces Term tree.\relax }}{14}{figure.caption.9}
-\contentsline {figure}{\numberline {\global \advance \c@totalfigurecount 1\relax 6}{\ignorespaces Breaking hygiene.\relax }}{16}{figure.caption.10}
-\contentsline {figure}{\numberline {\global \advance \c@totalfigurecount 1\relax 7}{\ignorespaces Macro expansion.\relax }}{17}{figure.caption.11}
+\contentsline {figure}{\numberline {\global \advance \c@totalfigurecount 1\relax 6}{\ignorespaces Breaking hygiene.\relax }}{15}{figure.caption.10}
+\contentsline {figure}{\numberline {\global \advance \c@totalfigurecount 1\relax 7}{\ignorespaces Macro expansion.\relax }}{16}{figure.caption.11}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {\global \advance \c@totalfigurecount 1\relax 8}{\ignorespaces Approach 1.\relax }}{20}{figure.caption.12}
-\contentsline {figure}{\numberline {\global \advance \c@totalfigurecount 1\relax 9}{\ignorespaces Calling unless macro\relax }}{20}{figure.caption.13}
-\contentsline {figure}{\numberline {\global \advance \c@totalfigurecount 1\relax 10}{\ignorespaces it identifier is correctly bounded to \$cond.. Of an anaphoric-if\relax }}{21}{figure.caption.14}
-\contentsline {figure}{\numberline {\global \advance \c@totalfigurecount 1\relax 11}{\ignorespaces Approach 2.Syntax parameter implementation contd..\relax }}{23}{figure.caption.16}
-\contentsline {figure}{\numberline {\global \advance \c@totalfigurecount 1\relax 12}{\ignorespaces Approach 2. Syntax parameter expansion\relax }}{23}{figure.caption.17}
-\contentsline {figure}{\numberline {\global \advance \c@totalfigurecount 1\relax 13}{\ignorespaces Approach 2. Implementation \relax }}{24}{figure.caption.18}
+\contentsline {figure}{\numberline {\global \advance \c@totalfigurecount 1\relax 8}{\ignorespaces Approach 1.\relax }}{19}{figure.caption.12}
+\contentsline {figure}{\numberline {\global \advance \c@totalfigurecount 1\relax 9}{\ignorespaces Calling unless macro\relax }}{19}{figure.caption.13}
+\contentsline {figure}{\numberline {\global \advance \c@totalfigurecount 1\relax 10}{\ignorespaces it identifier is correctly bounded to \$cond.. Of an anaphoric-if\relax }}{20}{figure.caption.14}
+\contentsline {figure}{\numberline {\global \advance \c@totalfigurecount 1\relax 11}{\ignorespaces Approach 2.Syntax parameter implementation contd..\relax }}{22}{figure.caption.16}
+\contentsline {figure}{\numberline {\global \advance \c@totalfigurecount 1\relax 12}{\ignorespaces Approach 2. Syntax parameter expansion\relax }}{22}{figure.caption.17}
+\contentsline {figure}{\numberline {\global \advance \c@totalfigurecount 1\relax 13}{\ignorespaces Approach 2. Implementation \relax }}{23}{figure.caption.18}

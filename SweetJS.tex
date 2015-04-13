@@ -1,6 +1,6 @@
 \chapter{Basics of Sweet.JS}
-Sweet.JS~\cite{bib6} is a hygienic macro compiler for JavaScript that takes JavaScript macros and produces normal JavaScript code which one can run in a browser or using a standalone interpreter like Node.JS. The idea is that you define a macro with a name and a list of patterns. Whenever a macro is invoked, the code is matched and expanded at  compile time and produces the expanded source that can be run in any JavaScript environment. 
-\section{Type of macros in Sweet.JS}
+\textcolor{white}{``}Sweet.JS~\cite{bib6} is a hygienic macro compiler for JavaScript that takes JavaScript macros and produces normal JavaScript code that one can run in a browser or using a standalone interpreter like Node.JS. The idea is that you define a macro with a name and a list of patterns. Whenever a macro is invoked, the code is matched and expanded at  compile time and produces the expanded source that can be run in any JavaScript environment. \textcolor{white}{''}
+\section{Types of macros in Sweet.JS}
 \begin{enumerate}
 \item {\bf Rule macros }
 Rule macros work by matching a syntax pattern and generating new syntax based on the template.
@@ -25,8 +25,8 @@ macro swap {
 	var tmp = 6;
 	swap(foo, tmp);
 \end{lstlisting} 
-
-When the compiler hits "swap", it invokes the macro and runs each rule against the code after it. When a pattern is matched, it returns the code within the rule. You can bind identifiers \& expressions within the matching pattern and use them within the code.
+\textcolor{white}{``}
+When the compiler hits "swap," it invokes the macro and runs each rule against the code after it. When a pattern is matched, it returns the code within the rule. You can bind identifiers \& expressions within the matching pattern and use them within the code.\textcolor{white}{''}
 
 if Sweet.JS did not support hygiene, this macro might expand to
 \begin{lstlisting}[frame=single]
@@ -35,8 +35,8 @@ if Sweet.JS did not support hygiene, this macro might expand to
 	var tmp = foo;
 	foo = tmp;
 	tmp = tmp;
-\end{lstlisting} 
-The \texttt{tmp} created from the macro collides with my local \texttt{tmp}. This is a serious problem, but macros solve this issue by implementing hygiene. Basically they track the scope of variables during expansion and rename them to maintain the correct scope. Sweet.js fully implements hygiene so it never generates the code you see above. It would actually generate the following code
+\end{lstlisting} \textcolor{white}{``}
+The \textit{tmp} created from the macro collides with my local \textit{tmp}. This is a serious problem, but macros solve this issue by implementing hygiene. Basically they track the scope of variables during expansion and rename them to maintain the correct scope. Sweet.JS fully implements hygiene so it never generates the code you see above. It would actually generate the following code\textcolor{white}{''}
 \begin{lstlisting}[frame=single]
 	var foo = 5;
 	var tmp$1 = 6;
@@ -72,16 +72,16 @@ The above code expand to
 \begin{lstlisting}[frame=single]
 	var x$123 = 0.8367501533161177;
 \end{lstlisting}
-
+\textcolor{white}{``}
 The body of a macro contains a mixture of templates and normal JavaScript that can create and manipulate syntax
 The code within the ``case'' is run at expand-time and you use \#\{\} to create "templates" that construct code just like the syntax in the rule macros.
-
+\textcolor{white}{''}
 \end{enumerate}
 
-\section{How Sweet.JS work?}
-
+\section{Sweet.JS compilation process}
+\textcolor{white}{``}
 Sweet.JS includes a separate reader that converts a sequence of tokens into a sequence of token trees, analogous to s-expressions in scheme, without feedback from the parser ~\cite{bib2}.
-
+\textcolor{white}{''}
 \begin{figure}[htb]
 \centering
 \includegraphics[width=0.8\textwidth]{images/Tokenizer.jpg}
@@ -89,7 +89,7 @@ Sweet.JS includes a separate reader that converts a sequence of tokens into a se
 \label{fig:Tokenizer}
 \end{figure}
 
-The parser gives structure to unstructured source code. The lexer converts a character stream to a token stream and the parser converts the token stream into an abstract syntax tree (AST) according to a context free grammar ~\cite{bib2}. The macro expander  must sit in between the lexer and the parser. Here the reader records sufficiently history information in the form of token trees in order to decide how to parse the token, which is required to decide if token is a divisor or a regular expression.
+The parser gives structure to unstructured source code. The lexer converts a character stream to a token stream and the parser converts the token stream into an abstract syntax tree (AST) according to a context free grammar ~\cite{bib2}. The macro expander  must sit between the lexer and the parser. Here the reader records sufficiently history information in the form of token trees in order to decide how to parse the token, which is required to decide if token is a divisor or a regular expression.
 In traditional JavaScript compilers, the parser and lexer are intertwined; rather than running the entire program through the lexer once to get a sequence of tokens, the parser calls out to the lexer from a given grammatical context with a flag to indicate if the lexer should accept a regular expression or a divide operator and the input character are tokenized accordingly ~\cite{bib2}.
 \newpage
 Example
@@ -109,7 +109,7 @@ Example
 \caption{Token tree.} 
 \label{fig:readeroutput}
 \end{figure}
-Reader convert string of token to token tree , A token tree is similar to tokens produced by the standard esprima lexer~\cite{bib7} but with the critical difference being that token trees match delimiters. 
+Reader convert string of token to token tree, a token tree is similar to tokens produced by the standard esprima lexer~\cite{bib7} but with the critical difference being that token trees match delimiters. 
 \begin{figure}[htb]
 \centering
 \includegraphics[width=1.0\textwidth]{images/AST.jpg}
@@ -118,9 +118,7 @@ Reader convert string of token to token tree , A token tree is similar to tokens
 
 \end{figure}
 
-The parser give structure to unstructured source code, In parsers without macro systems, this is usually accomplished by a lexer that convert a character stream to a token stream and a parser that convert the token stream into an AST according to a context-free grammar.
-
-The approach used in Sweet.JS is \textit{Enforestation}, first pioneered by Honu ~\cite{bib4}. Enforestation means ,extracts the sequence of terms produced by the reader to create a term tree. Consider following let example 
+The approach used in Sweet.JS is \textit{Enforestation}, first pioneered by Honu ~\cite{bib4}. Enforestation, extracts the sequence of terms produced by the reader to create a term tree. Consider the following \texttt{let} example 
 
 \begin{figure}[htb]
 \centering
@@ -129,7 +127,7 @@ The approach used in Sweet.JS is \textit{Enforestation}, first pioneered by Honu
 \label{fig:AST}
 
 \end{figure}
-Enforestation begins by loading the let macro into the macro environment and converting the function declaration into a term tree.
+Enforestation begins by loading the \textit{let} as shown in Figure:4, macro into the macro environment and converting the function declaration into a term tree.
 
 \begin{figure}[htb]
 \centering
@@ -139,23 +137,25 @@ Enforestation begins by loading the let macro into the macro environment and con
 
 \end{figure}
 
-A term tree is a kind of proto-AST that represent a partial parse of the program. As the expander passes through the token trees, it creates term trees that contain unexpanded sub trees that will be expanded once all macro definition have been discovered in the current scope.
+Figure 5: shows the use of \textit{let} is expanded away, \textit{var} and \textit{return} keyword is created.
 
-\section{Problem trying to solve?}
+A term tree is a kind of proto-AST that represent a partial parse of the program. As the expander passes through the token trees, it creates term trees that contain unexpanded sub trees that will be expanded once all macro definition have been discovered in the current scope ~\cite{bib2}.
 
-Although the benefits of hygienic macros are well established, there are occasions when traditional hygienic bindings are insufficient. The classic example is "anaphoric conditionals" where the value of the tested expression is available as an \textsc{it} bindings.When the condition is true, an \textsc{it} identifier is automatically created and set to the value of the condition. An anaphoric macro is a type of programming macro that deliberately captures some form supplied to the macro which may be referred to by an anaphor (an expression referring to another).
+\section{Current limitation of Sweet.JS}
+\textcolor{white}{``}
+Although the benefits of hygienic macros are well established, there are occasions when traditional hygienic bindings are insufficient. The classic example is "anaphoric conditionals" where the value of the tested expression is available as an \textit{it} bindings.When the condition is true, an \textit{it} identifier is automatically created and set to the value of the condition. An anaphoric macro is a type of programming macro that deliberately captures some form supplied to the macro which may be referred to by an anaphor (an expression referring to another).
+\textcolor{white}{''}
 
-\newpage
 \begin{figure}
 \centering
-\includegraphics[width=1.0\textwidth]{images/Breakhygiene.jpg}
+\includegraphics[width=1.0\textwidth,height=11cm]{images/Breakhygiene.jpg}
 \caption{Breaking hygiene.} 
 \label{fig:Breakhygiene}
 
 \end{figure}
-In above example, I define the \texttt{"unless"} macro which executes code if conditional is false. If the conditional is true, code specified in the else clause is executed. Here we used \texttt{anaphoric-if} condition which introduces an anaphor \texttt{it} which should bound to the result of the test clause.
-
 \newpage
+In Figure 6, I define the \textit{"unless"} macro which executes code if conditional is false. If the conditional is true, code specified in the else clause is executed. Here we used \textit{anaphoric-if} condition which introduces an anaphor \textit{it} which should bind to the result of the test clause.
+
 \begin{figure}
 
 \centering
@@ -165,9 +165,7 @@ In above example, I define the \texttt{"unless"} macro which executes code if co
 
 \end{figure}
 
-\newpage
-
-In Figure 7, at line (8) the identifier \texttt{it} is not defined. Here we wish to introduce the identifiers deliberately breaking hygiene. 
+In Figure 7, on macro expansion in line (8) the identifier \texttt{it} is not defined. Here we wish to introduce the identifiers deliberately breaking hygiene. 
 
 The same unhygienic macros are possible in Scheme as shown in the below example, 
 \begin{lstlisting}[frame=single]
@@ -176,16 +174,14 @@ The same unhygienic macros are possible in Scheme as shown in the below example,
    (if it
       true-expr
       false-expr)))
-
- (aif #t (displayln it) (void))
-
-it: undefined;
+aif #t (displayln it) (void))
+it: undefined; //error
 cannot reference an identifier before its definition
 in module: 'program
 \end{lstlisting}
-
-When using syntax-parameterize, \texttt{it} acts as an alias for \texttt{tmp}. The alias behavior is created by make-rename-transformer. \textbf{define-syntax-parameter}, binds the keyword to the value obtained by evaluating the transformer. The transformer provides the default expansion for the syntax parameter. \textbf{syntax-parameterize} adjusts the keyword to use the values obtained by evaluating their transformer in the expansion of the expression. 
-
+\textcolor{white}{``}
+When using syntax-parameterize, \texttt{it} acts as an alias for \texttt{tmp}. The alias behavior is created by \textbf{make-rename-transformer}. \textbf{define-syntax-parameter}, binds the keyword to the value obtained by evaluating the transformer. The transformer provides the default expansion for the syntax parameter. Usually, you will just want to have the transformer throw a syntax error indicating that the keyword is supposed to be used in conjunction with another macro as shown in the below example. 
+\textcolor{white}{''}
 \begin{lstlisting}[frame=single][frame=single]
 (require racket/stxparam)
 (define-syntax-parameter it
@@ -200,4 +196,10 @@ When using syntax-parameterize, \texttt{it} acts as an alias for \texttt{tmp}. T
      true-expr)
      false-expr)))
 \end{lstlisting}
-\texttt{"define-syntax-parameter,"} binds the keyword to the value obtained by evaluating the transformer. The transformer provides the default expansion for the syntax parameter.\texttt{"syntax-parameterize,"} adjust keyword to use the values obtained by evaluating their transformer in the expansion of the expression. 
+\textcolor{white}{``}
+\texttt{"syntax-parameterize,"} adjust keyword to use the values obtained by evaluating their transformer in the expansion of the expression. Each keyword must be bound to a syntax-parameter.
+\textcolor{white}{''}
+\begin{lstlisting}[frame=single][frame=single]
+(aif 10 (displayln it) (void))
+\end{lstlisting}
+Inside the syntax-parameterize, \textit{it} acts as an alias for \textit{tmp} results of above code is 10. The alias behavior is created by \texttt{make-rename-transformer}.
